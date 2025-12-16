@@ -25,7 +25,7 @@ namespace CommunitySharing.Services
         }
 
         // Firebase web API key (from Firebase console)
-        private const string FirebaseWebApiKey = "AIzaSyClaxO656Jgm2vcUAKRWHhABIcgCWkTldk";
+        private const string FirebaseWebApiKey = "";
 
         // Sign in with Firebase via REST -> get idToken
         public async Task<(bool Success, string? IdToken, string? Error)> FirebaseSignInAsync(string email, string password)
@@ -125,3 +125,4 @@ namespace CommunitySharing.Services
         
     }
 }
+
