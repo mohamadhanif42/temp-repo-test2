@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    x:Class="CommunitySharing.DiscoverPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False">
+
+    <!-- Gradient Background -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFE1CC" Offset="0.0"/>
+            <GradientStop Color="#FFF5C8" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header Section -->
+        <VerticalStackLayout Padding="20,60,20,20" Spacing="20" Grid.Row="0">
+            <Label Text="Discover"
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold"
+                   FontSize="32"
+                   TextColor="Black"/>
+
+            <!-- Search Bar -->
+            <Grid HeightRequest="55">
+                <Frame CornerRadius="28"
+                       BackgroundColor="White"
+                       HasShadow="True"
+                       Padding="15,0"
+                       BorderColor="Black">
+                    <Entry x:Name="SearchEntry"
+                           Placeholder="Search items..."
+                           PlaceholderColor="#666"
+                           FontSize="16"
+                           TextColor="Black"
+                           BackgroundColor="Transparent"/>
+                </Frame>
+
+                <ImageButton Source="search_icon.png"
+                             WidthRequest="26"
+                             HeightRequest="26"
+                             BackgroundColor="Transparent"
+                             HorizontalOptions="End"
+                             VerticalOptions="Center"
+                             Margin="10,0,15,0"
+                             Clicked="OnSearchClicked"/>
+            </Grid>
+
+            <!-- Filter Buttons -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+                <Frame CornerRadius="20" Padding="15,5" BackgroundColor="White" BorderColor="#32CD32" HasShadow="True">
+                    <Label Text="All"
+                           TextColor="#32CD32"
+                           FontAttributes="Bold"
+                           FontSize="14"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Frame>
+
+                <Frame WidthRequest="45" HeightRequest="45" CornerRadius="25" BackgroundColor="White" HasShadow="True">
+                    <Image Source="fruit_icon.png"
+                           HeightRequest="24"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                </Frame>
+
+                <Frame WidthRequest="45" HeightRequest="45" CornerRadius="25" BackgroundColor="White" HasShadow="True">
+                    <Image Source="clothes_icon.png"
+                           HeightRequest="24"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                </Frame>
+
+                <Frame WidthRequest="45" HeightRequest="45" CornerRadius="25" BackgroundColor="White" HasShadow="True">
+                    <Image Source="book_icon.png"
+                           HeightRequest="24"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                </Frame>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <!-- Empty Item List (to be filled dynamically later) -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="20"
+                                 x:Name="ItemContainer">
+                <Label Text="No items available yet."
+                       FontAttributes="Italic"
+                       TextColor="#888"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       Margin="0,50,0,0"/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Navigation -->
+        <Grid Grid.Row="2"
+              BackgroundColor="White"
+              HeightRequest="80"
+              ColumnDefinitions="*,*,*,*"
+              Padding="15,8">
+
+            <!-- Discover Tab -->
+            <VerticalStackLayout x:Name="DiscoverTab"
+                                 Grid.Column="0"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="home_active.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Discover"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       TextColor="#34C759"
+                       HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavDiscover"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <!-- Upload Tab -->
+            <VerticalStackLayout x:Name="UploadTab"
+                                 Grid.Column="1"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="upload_icon.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Upload"
+                       FontSize="12"
+                       TextColor="#000"
+                       HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavUpload"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <!-- Message Tab -->
+            <VerticalStackLayout x:Name="MessageTab"
+                                 Grid.Column="2"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="message_icon.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Message"
+                       FontSize="12"
+                       TextColor="#000"
+                       HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavMessage"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <!-- Profile Tab -->
+            <VerticalStackLayout x:Name="ProfileTab"
+                                 Grid.Column="3"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="profile_icon.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Profile"
+                       FontSize="12"
+                       TextColor="#000"
+                       HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavProfile"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CommunitySharing.UploadPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False">
+
+    <!-- Background -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFE1CC" Offset="0.0"/>
+            <GradientStop Color="#FFF5C8" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <Grid Padding="20,50,20,10" RowDefinitions="Auto" ColumnDefinitions="Auto,*">
+            <ImageButton Source="back_icon.png"
+                         WidthRequest="28"
+                         HeightRequest="28"
+                         BackgroundColor="Transparent"
+                         Clicked="OnBackClicked"/>
+            <Label Grid.Column="1"
+                   Text="Upload Item"
+                   FontAttributes="Bold"
+                   FontSize="28"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   TextColor="Black"/>
+        </Grid>
+
+        <!-- Main Form -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="20">
+
+                <!-- Photo Upload -->
+                <Frame BorderColor="#999"
+                       BackgroundColor="#FFF"
+                       CornerRadius="12"
+                       Padding="20"
+                       HeightRequest="150"
+                       HorizontalOptions="Fill"
+                       VerticalOptions="Center"
+                       HasShadow="False">       
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                        <Image Source="camera_icon.png" HeightRequest="32"/>
+                        <Label Text="Add your photo" FontSize="14" TextColor="#444" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Title -->
+                <Frame CornerRadius="12" BackgroundColor="White" HasShadow="False" Padding="10,0">
+                    <Entry Placeholder="Title" FontSize="16" TextColor="Black" />
+                </Frame>
+
+                <!-- Description -->
+                <Frame CornerRadius="12" BackgroundColor="White" HasShadow="False" Padding="10,0">
+                    <Entry Placeholder="Description" FontSize="16" TextColor="Black" />
+                </Frame>
+
+                <!-- Category -->
+                <Frame CornerRadius="20" BackgroundColor="White" HasShadow="False" Padding="15,10">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Category" FontAttributes="Bold" TextColor="Black" FontSize="16"/>
+
+                        <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                            <Frame CornerRadius="15" Padding="15,5" BorderColor="#32CD32" BackgroundColor="White">
+                                <Label Text="Food" TextColor="#32CD32" FontAttributes="Bold"/>
+                            </Frame>
+                            <Frame CornerRadius="15" Padding="15,5" BorderColor="Black" BackgroundColor="White">
+                                <Label Text="Books" TextColor="Black"/>
+                            </Frame>
+                            <Frame CornerRadius="15" Padding="15,5" BorderColor="Black" BackgroundColor="White">
+                                <Label Text="Clothes" TextColor="Black"/>
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Pickup Preferences -->
+                <Frame CornerRadius="20" BackgroundColor="White" HasShadow="False" Padding="15,15">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Pickup Preferences" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
+
+                        <!-- Contactless Pickup -->
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Contactless Pickup" TextColor="Black" VerticalOptions="Center"/>
+                            <Switch x:Name="ContactlessSwitch" OnColor="#32CD32"/>
+                        </HorizontalStackLayout>
+
+                        <!-- Available Times -->
+                        <Label Text="Available Times / Instruction"
+                               FontSize="14"
+                               TextColor="Black"
+                               FontAttributes="Bold"
+                               Margin="0,10,0,0"/>
+
+                        <!-- Weekday Selection -->
+                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Frame Padding="8" CornerRadius="25" BackgroundColor="#EEE">
+                                <Label Text="Mon"/>
+                            </Frame>
+                            <Frame Padding="8" CornerRadius="25" BackgroundColor="#EEE">
+                                <Label Text="Tue"/>
+                            </Frame>
+                            <Frame Padding="8" CornerRadius="25" BackgroundColor="#EEE">
+                                <Label Text="Wed"/>
+                            </Frame>
+                            <Frame Padding="8" CornerRadius="25" BackgroundColor="#EEE">
+                                <Label Text="Thu"/>
+                            </Frame>
+                            <Frame Padding="8" CornerRadius="25" BackgroundColor="#EEE">
+                                <Label Text="Fri"/>
+                            </Frame>
+                            <Frame Padding="8" CornerRadius="25" BackgroundColor="#EEE">
+                                <Label Text="Sat"/>
+                            </Frame>
+                            <Frame Padding="8" CornerRadius="25" BackgroundColor="#EEE">
+                                <Label Text="Sun"/>
+                            </Frame>
+                        </HorizontalStackLayout>
+
+                        <!-- Time Range -->
+                        <HorizontalStackLayout Spacing="20" HorizontalOptions="Center" Margin="0,10,0,0">
+                            <VerticalStackLayout>
+                                <Label Text="From:" FontSize="14" TextColor="Black"/>
+                                <TimePicker x:Name="StartTimePicker" Time="09:00"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout>
+                                <Label Text="To:" FontSize="14" TextColor="Black"/>
+                                <TimePicker x:Name="EndTimePicker" Time="14:00"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <!-- Specific Instructions -->
+                        <Frame CornerRadius="12" BackgroundColor="White" BorderColor="Black" Padding="10">
+                            <Editor Placeholder="Specific Instructions..." FontSize="14" TextColor="Black" AutoSize="TextChanges"/>
+                        </Frame>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Upload Button -->
+                <Button Text="Upload"
+                        BackgroundColor="#34C759"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="25"
+                        HeightRequest="55"
+                        Clicked="OnUploadClicked"/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Navigation -->
+        <Grid Grid.Row="2"
+              BackgroundColor="White"
+              HeightRequest="80"
+              ColumnDefinitions="*,*,*,*"
+              Padding="15,8">
+
+            <VerticalStackLayout x:Name="DiscoverTab"
+                                 Grid.Column="0"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="home_icon.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Discover"
+                       FontSize="12"
+                       TextColor="#000"
+                       HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavDiscover"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="UploadTab"
+                                 Grid.Column="1"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="upload_active.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Upload"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       TextColor="#34C759"
+                       HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavUpload"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="MessageTab"
+                                 Grid.Column="2"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="message_icon.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Message"
+                       FontSize="12"
+                       TextColor="#000"
+                       HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavMessage"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="ProfileTab"
+                                 Grid.Column="3"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="profile_icon.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Profile"
+                       FontSize="12"
+                       TextColor="#000"
+                       HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavProfile"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

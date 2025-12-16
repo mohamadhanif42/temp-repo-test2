@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CommunitySharing.ProfilePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False">
+
+    <!-- Background Gradient -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFE1CC" Offset="0.0"/>
+            <GradientStop Color="#FFF5C8" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- HEADER -->
+        <Grid Padding="20,50,20,10" ColumnDefinitions="Auto,*">
+            <ImageButton Source="back_icon.png"
+                         WidthRequest="28"
+                         HeightRequest="28"
+                         BackgroundColor="Transparent"
+                         Clicked="OnBackClicked"/>
+            <Label Grid.Column="1"
+                   Text="Profile"
+                   FontAttributes="Bold"
+                   FontSize="28"
+                   VerticalOptions="Center"
+                   TextColor="Black"/>
+        </Grid>
+
+        <!-- MAIN CONTENT -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="25" HorizontalOptions="Center">
+
+                <!-- Profile Picture -->
+                <Frame WidthRequest="100"
+                       HeightRequest="100"
+                       CornerRadius="50"
+                       HasShadow="True">
+                    <Image Source="profile_placeholder.png"
+                           Aspect="AspectFill"
+                           WidthRequest="100"
+                           HeightRequest="100" />
+                </Frame>
+
+                <!-- Profile Info -->
+                <Label Text="Peter Griffin Anak Kumbang Backflip"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       HorizontalTextAlignment="Center"
+                       TextColor="Black"/>
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <Image Source="location_icon.png" WidthRequest="16" HeightRequest="16"/>
+                    <Label Text="University of Technology Sibu, Sarawak."
+                           FontSize="13"
+                           TextColor="#555"/>
+                </HorizontalStackLayout>
+
+                <!-- Buttons -->
+                <Button Text="Edit Profile"
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        Clicked="OnEditProfileClicked"
+                        ContentLayout="Left,10"
+                        ImageSource="edit_icon.png"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BOTTOM NAVIGATION -->
+        <Grid Grid.Row="2"
+              BackgroundColor="White"
+              HeightRequest="80"
+              ColumnDefinitions="*,*,*,*"
+              Padding="15,8">
+
+            <VerticalStackLayout x:Name="DiscoverTab"
+                                 Grid.Column="0"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="home_icon.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Discover" FontSize="12" TextColor="Black" HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavDiscover"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="UploadTab"
+                                 Grid.Column="1"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="upload_icon.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Upload" FontSize="12" TextColor="Black" HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavUpload"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="MessageTab"
+                                 Grid.Column="2"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="message_icon.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Message" FontSize="12" TextColor="Black" HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavMessage"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="ProfileTab"
+                                 Grid.Column="3"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Image Source="profile_active.png" WidthRequest="28" HeightRequest="28"/>
+                <Label Text="Profile"
+                       FontSize="12"
+                       TextColor="#34C759"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavProfile"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>
