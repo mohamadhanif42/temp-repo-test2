@@ -1,0 +1,100 @@
+﻿@page "/inventory"
+@inject AdminApiService Api
+@inject NavigationManager Nav
+
+<h3>Inventory</h3>
+<button class="btn btn-secondary mb-2" @onclick="Logout">Logout</button>
+<button class="btn btn-primary mb-2 ms-2" @onclick="NewItem">Add Item</button>
+
+@if (items == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead><tr><th>Name</th><th>Qty</th><th>Price</th><th></th></tr></thead>
+        <tbody>
+            @foreach (var it in items)
+            {
+                <tr>
+                    <td>@it.Name</td>
+                    <td>@it.Quantity</td>
+                    <td>@it.Price</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" @onclick="@(() => EditItem(it))">Edit</button>
+                        <button class="btn btn-sm btn-outline-danger ms-2" @onclick="@(() => Delete(it.Id))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (editing)
+{
+    <hr />
+    <h5>@(editModel.Id == null ? "Create item" : "Edit item")</h5>
+    <input class="form-control mb-2" placeholder="Name" @bind="editModel.Name" />
+    <input class="form-control mb-2" type="number" placeholder="Quantity" @bind="editModel.Quantity" />
+    <input class="form-control mb-2" type="number" placeholder="Price" @bind="editModel.Price" step="0.01" />
+    <button class="btn btn-success" @onclick="Save">Save</button>
+    <button class="btn btn-secondary ms-2" @onclick="CancelEdit">Cancel</button>
+}
+
+@code {
+    List<AdminApiService.InventoryDto>? items;
+    bool editing = false;
+    AdminApiService.InventoryDto editModel = new() { Id = Guid.NewGuid().ToString() };
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await Api.GetSavedTokenAsync();
+        if (string.IsNullOrEmpty(token)) { Nav.NavigateTo("/login"); return; }
+        await Load();
+    }
+
+    async Task Load()
+    {
+        items = await Api.GetInventoryAsync();
+        StateHasChanged();
+    }
+
+    void NewItem()
+    {
+        editing = true;
+        editModel = new AdminApiService.InventoryDto { Id = Guid.NewGuid().ToString(), Name = "", Quantity = 0, Price = 0M };
+    }
+
+    void EditItem(AdminApiService.InventoryDto dto)
+    {
+        editing = true;
+        editModel = new AdminApiService.InventoryDto
+        {
+            Id = dto.Id,
+            Name = dto.Name,
+            Quantity = dto.Quantity,
+            Price = dto.Price
+        };
+    }
+
+    async Task Delete(string id)
+    {
+        var ok = await Api.DeleteInventoryAsync(id);
+        if (ok) await Load();
+    }
+
+    async Task Save()
+    {
+        await Api.CreateOrUpdateInventoryAsync(editModel);
+        editing = false;
+        await Load();
+    }
+
+    void CancelEdit() { editing = false; }
+    async Task Logout()
+    {
+        await Api.ClearTokenAsync();
+        Nav.NavigateTo("/login", forceLoad: true);
+    }
+}
