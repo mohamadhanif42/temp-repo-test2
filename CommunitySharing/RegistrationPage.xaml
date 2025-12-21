@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CommunitySharing.RegistrationPage"
+             Title="Registration"
+             Shell.NavBarIsVisible="False">
+
+	<!-- PAGE BACKGROUND -->
+	<ContentPage.Background>
+		<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+			<GradientStop Color="#FFE1CC" Offset="0.0" />
+			<GradientStop Color="#FFF5C8" Offset="1.0" />
+		</LinearGradientBrush>
+	</ContentPage.Background>
+
+	<ScrollView>
+		<Grid Padding="30"
+              RowDefinitions="Auto, *, Auto"
+              RowSpacing="25">
+
+			<!-- TITLE -->
+			<Label
+                Grid.Row="0"
+                Text="Create Account"
+                Style="{StaticResource AuthTitleLabel}" />
+
+			<!-- FORM -->
+			<VerticalStackLayout Grid.Row="1"
+                                 Spacing="15"
+                                 VerticalOptions="Start">
+
+				<!-- FULL NAME -->
+				<Entry
+                    x:Name="FullNameEntry"
+                    Placeholder="Full Name"
+                    Style="{StaticResource AuthEntry}"
+                    Keyboard="Text" />
+
+				<!-- EMAIL -->
+				<Entry
+                    x:Name="EmailEntry"
+                    Placeholder="Email"
+                    Style="{StaticResource AuthEntry}"
+                    Keyboard="Email" />
+
+				<!-- PASSWORD -->
+				<Entry
+                    x:Name="PasswordEntry"
+                    Placeholder="Password"
+                    Style="{StaticResource AuthEntry}"
+                    IsPassword="True"
+                    Completed="OnPasswordCompleted"
+                    TextChanged="OnPasswordTextChanged" />
+
+				<!-- CONFIRM PASSWORD -->
+				<Entry
+                    x:Name="ConfirmPasswordEntry"
+                    Placeholder="Confirm Password"
+                    Style="{StaticResource AuthEntry}"
+                    IsPassword="True"
+                    Completed="OnPasswordCompleted"
+                    TextChanged="OnPasswordTextChanged" />
+
+				<!-- SHOW PASSWORD TOGGLE -->
+				<HorizontalStackLayout Spacing="10">
+					<CheckBox x:Name="ShowPasswordCheckBox"
+                              CheckedChanged="OnShowPasswordCheckedChanged" />
+					<Label Text="Show Password"
+                           VerticalOptions="Center"
+                           TextColor="Black"
+                           FontSize="14" />
+				</HorizontalStackLayout>
+
+				<!-- TERMS & CONDITIONS -->
+				<HorizontalStackLayout Spacing="10" Margin="0,10">
+					<CheckBox x:Name="TermsCheckBox" />
+					<Label Style="{StaticResource AuthFormLabel}">
+						<Label.FormattedText>
+							<FormattedString>
+								<Span Text="I agree to the " TextColor="Black"/>
+								<Span Text="Terms &amp; Condition"
+                                      TextDecorations="Underline"
+                                      TextColor="#3B82F6"
+                                      FontAttributes="Bold" />
+							</FormattedString>
+						</Label.FormattedText>
+					</Label>
+				</HorizontalStackLayout>
+
+				<!-- SIGN UP BUTTON -->
+				<Button Text="Sign Up"
+                        BackgroundColor="#3B82F6"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="30"
+                        HeightRequest="55"
+                        Margin="0,15,0,0"
+                        Clicked="OnSignUpClicked" />
+
+				<!-- VALIDATION MESSAGE -->
+				<Label x:Name="ValidationMessageLabel"
+                       TextColor="Red"
+                       FontSize="13"
+                       HorizontalOptions="Center"
+                       IsVisible="False"
+                       Margin="0,-5,0,0" />
+			</VerticalStackLayout>
+
+			<!-- FOOTER -->
+			<HorizontalStackLayout Grid.Row="2"
+                                   HorizontalOptions="Center"
+                                   Margin="0,20,0,0"
+                                   Spacing="5">
+
+				<Label
+                    Text="Already have an account?"
+                    Style="{StaticResource AuthFormLabel}" />
+
+				<Label
+                    Text="Log In"
+                    FontAttributes="Bold"
+                    Style="{StaticResource LinkLabel}">
+					<Label.GestureRecognizers>
+						<TapGestureRecognizer Tapped="OnLoginClicked" />
+					</Label.GestureRecognizers>
+				</Label>
+
+			</HorizontalStackLayout>
+
+		</Grid>
+	</ScrollView>
+
+</ContentPage>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CommunitySharing.UploadPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFE1CC" Offset="0.0"/>
+            <GradientStop Color="#FFF5C8" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <Grid Grid.Row="0" Padding="20,50,20,15" ColumnDefinitions="Auto,*">
+            <ImageButton Source="back_icon.png"
+                         Grid.Column="0"
+                         WidthRequest="28" HeightRequest="28" BackgroundColor="Transparent" Clicked="OnBackClicked" VerticalOptions="Center"/>
+
+            <Label Grid.Column="1"
+                   Text="Upload Item"
+                   FontAttributes="Bold"
+                   FontSize="24"
+                   TextColor="#1F2937"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Margin="-28,0,0,0"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="25,10,25,30">
+
+                <Frame CornerRadius="20" BackgroundColor="White" HasShadow="True" Padding="20" BorderColor="Transparent" Shadow="{Shadow Brush=Black, Offset='0,10', Opacity=0.1, Radius=20}">
+
+                    <VerticalStackLayout Spacing="20">
+
+                        <Grid HeightRequest="220">
+
+                            <Border x:Name="UploadStateView"
+                                    Stroke="#34C759"
+                                    StrokeThickness="2"
+                                    StrokeDashArray="5,5"
+                                    StrokeShape="RoundRectangle 15"
+                                    BackgroundColor="#F9FAFB"
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="Fill"
+                                    IsVisible="True">
+
+                                <VerticalStackLayout x:Name="PhotoPlaceholder" HorizontalOptions="Center" VerticalOptions="Center" Spacing="12" InputTransparent="True">
+                                    <Frame HeightRequest="60" WidthRequest="60" CornerRadius="30" BackgroundColor="Transparent" BorderColor="Transparent" Padding="0" HasShadow="False">
+                                        <Label Text="📷" FontSize="40" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,-4,0,0"/>
+                                    </Frame>
+                                    <Label Text="Tap to Add Photo" TextColor="#34C759" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Text="(JPG, PNG supported)" TextColor="#9CA3AF" FontSize="12" HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPhotoUploadTapped"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+
+                            <Frame x:Name="PhotoFrame"
+                                   CornerRadius="15"
+                                   Padding="0"
+                                   IsClippedToBounds="True"
+                                   BorderColor="Transparent"
+                                   IsVisible="False"
+                                   BackgroundColor="#F9FAFB"
+                                   HasShadow="False">
+                                <Image x:Name="PhotoPreviewImage" Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPhotoUploadTapped"/>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+
+                            <Button x:Name="DeletePhotoButton"
+                                    Text="✕"
+                                    TextColor="White"
+                                    BackgroundColor="#EF4444"
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    CornerRadius="18"
+                                    WidthRequest="36"
+                                    HeightRequest="36"
+                                    Padding="0"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Start"
+                                    Margin="10"
+                                    IsVisible="False"
+                                    Clicked="OnRemovePhotoClicked"
+                                    Shadow="{Shadow Brush=Black, Offset='0,4', Opacity=0.2}"/>
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Title" FontSize="13" TextColor="#6B7280" FontAttributes="Bold"/>
+                            <Border Stroke="#E5E7EB" StrokeThickness="1" StrokeShape="RoundRectangle 12" BackgroundColor="#F9FAFB" Padding="15,2">
+                                <Entry x:Name="TitleEntry" Placeholder="e.g. Fresh Apples" PlaceholderColor="#9CA3AF" FontSize="15" TextColor="#111827" VerticalOptions="Center"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Description" FontSize="13" TextColor="#6B7280" FontAttributes="Bold"/>
+                            <Border Stroke="#E5E7EB" StrokeThickness="1" StrokeShape="RoundRectangle 12" BackgroundColor="#F9FAFB" Padding="15,10">
+                                <Editor x:Name="DescriptionEntry" Placeholder="Describe condition, pickup details..." PlaceholderColor="#9CA3AF" FontSize="15" TextColor="#111827" HeightRequest="80" AutoSize="TextChanges"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Category" FontSize="13" TextColor="#6B7280" FontAttributes="Bold"/>
+                            <HorizontalStackLayout Spacing="10">
+
+                                <Border x:Name="CatFood" ClassId="Food" Stroke="#34C759" StrokeThickness="1" StrokeShape="RoundRectangle 20" BackgroundColor="#E1F5E5" Padding="16,8">
+                                    <Label x:Name="LblFood" Text="Food" TextColor="#34C759" FontAttributes="Bold" FontSize="13"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnCategoryTapped"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border x:Name="CatBooks" ClassId="Books" Stroke="#E5E7EB" StrokeThickness="1" StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="16,8">
+                                    <Label x:Name="LblBooks" Text="Books" TextColor="#6B7280" FontSize="13"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnCategoryTapped"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border x:Name="CatClothes" ClassId="Clothes" Stroke="#E5E7EB" StrokeThickness="1" StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="16,8">
+                                    <Label x:Name="LblClothes" Text="Clothes" TextColor="#6B7280" FontSize="13"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnCategoryTapped"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="Contactless Pickup" FontAttributes="Bold" TextColor="#374151" VerticalOptions="Center"/>
+                            <Switch Grid.Column="1" x:Name="ContactlessSwitch" OnColor="#34C759"/>
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Availability" FontSize="13" TextColor="#6B7280" FontAttributes="Bold"/>
+                            <Grid ColumnDefinitions="*, 15, *">
+                                <Border Grid.Column="0" Stroke="#E5E7EB" StrokeThickness="1" StrokeShape="RoundRectangle 10" BackgroundColor="#F9FAFB" Padding="0" HeightRequest="45">
+                                    <TimePicker x:Name="StartTimePicker" Time="09:00" TextColor="#111827" HorizontalOptions="Center"/>
+                                </Border>
+                                <Label Grid.Column="1" Text="-" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9CA3AF"/>
+                                <Border Grid.Column="2" Stroke="#E5E7EB" StrokeThickness="1" StrokeShape="RoundRectangle 10" BackgroundColor="#F9FAFB" Padding="0" HeightRequest="45">
+                                    <TimePicker x:Name="EndTimePicker" Time="18:00" TextColor="#111827" HorizontalOptions="Center"/>
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <Label x:Name="ConditionPicker" IsVisible="False" Text="Food"/>
+                        <Entry x:Name="LocationEntry" IsVisible="False" Text="Kuching"/>
+                        <DatePicker x:Name="AvailableUntilDatePicker" IsVisible="False"/>
+                        <Editor x:Name="InstructionsEditor" IsVisible="False"/>
+
+                        <Button Text="Publish Listing"
+                                BackgroundColor="#34C759"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                CornerRadius="12"
+                                HeightRequest="54"
+                                Margin="0,10,0,0"
+                                Clicked="OnUploadClicked"
+                                Shadow="{Shadow Brush='#34C759', Offset='0,4', Opacity=0.3}"/>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="2" BackgroundColor="White" HeightRequest="80" ColumnDefinitions="*,*,*,*" Padding="10,10,10,20" Shadow="{Shadow Brush=Black, Offset='0,-4', Opacity=0.05}">
+            <VerticalStackLayout x:Name="DiscoverTab" Grid.Column="0" HorizontalOptions="Center" Spacing="4">
+                <Image Source="home_icon.png" WidthRequest="24" HeightRequest="24" Opacity="0.4"/>
+                <Label Text="Discover" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavDiscover"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="UploadTab" Grid.Column="1" HorizontalOptions="Center" Spacing="4">
+                <Image Source="upload_active.png" WidthRequest="24" HeightRequest="24" Opacity="1.0"/>
+                <Label Text="Upload" FontSize="11" TextColor="#34C759" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavUpload"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="MessageTab" Grid.Column="2" HorizontalOptions="Center" Spacing="4">
+                <Image Source="message_icon.png" WidthRequest="24" HeightRequest="24" Opacity="0.4"/>
+                <Label Text="Message" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavMessage"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="ProfileTab" Grid.Column="3" HorizontalOptions="Center" Spacing="4">
+                <Image Source="profile_icon.png" WidthRequest="24" HeightRequest="24" Opacity="0.4"/>
+                <Label Text="Profile" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavProfile"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

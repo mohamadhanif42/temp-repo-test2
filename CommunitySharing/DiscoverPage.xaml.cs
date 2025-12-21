@@ -1,0 +1,102 @@
+using Microsoft.Maui.Controls;
+using System;
+using Microsoft.Maui.Media;
+using CommunitySharing.Models;
+using CommunitySharing.Services;
+using System.Collections.ObjectModel;
+
+namespace CommunitySharing
+{
+    public partial class DiscoverPage : ContentPage
+    {
+        private readonly ListingService _listingService;
+
+        public ObservableCollection<ListingModel> Listings { get; } = new();
+        public DiscoverPage(ListingService listingService)
+        {
+            InitializeComponent();
+            _listingService = listingService;
+            BindingContext = this;
+            HighlightTab("Discover");
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            Listings.Clear();
+            var listings = await _listingService.GetListingsAsync();
+
+            foreach (var l in listings)
+                Listings.Add(l);
+        }
+
+        // ?? Search button click
+        private async void OnSearchClicked(object sender, EventArgs e)
+        {
+            // FIX: Use 'string?' to allow for a potential null value from SearchEntry.Text?.Trim()
+            string? query = SearchEntry.Text?.Trim();
+
+            // Use IsNullOrWhiteSpace to check for null, empty, or only whitespace strings
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                await DisplayAlert("Search", "Please enter something to search.", "OK");
+                return;
+            }
+
+            // Since we checked, 'query' is now guaranteed to be a non-empty string.
+            await DisplayAlert("Search", $"You searched for: {query}", "OK");
+        }
+
+        // ?? Bottom Navigation — Discover
+        private async void OnNavDiscover(object sender, TappedEventArgs e)
+        {
+            await DisplayAlert("Discover", "You’re already on the Discover page.", "OK");
+        }
+
+        // ?? Bottom Navigation — Upload
+        private async void OnNavUpload(object sender, TappedEventArgs e)
+        {
+            // Note: Assuming 'UploadPage' is correctly registered in your Shell routing
+            await Shell.Current.GoToAsync("///UploadPage");
+        }
+
+        // ?? Bottom Navigation — Messages
+        private async void OnNavMessage(object sender, TappedEventArgs e)
+        {
+            // Note: Assuming 'MessagesPage' is correctly registered in your Shell routing
+            await Shell.Current.GoToAsync("///MessagesPage");
+        }
+
+        // ?? Bottom Navigation — Profile
+        private async void OnNavProfile(object sender, TappedEventArgs e)
+        {
+            // Note: Assuming 'ProfilePage' is correctly registered in your Shell routing
+            await Shell.Current.GoToAsync("///ProfilePage");
+        }
+
+        private void HighlightTab(string selected)
+        {
+            ResetTabColors(DiscoverTab); ResetTabColors(UploadTab); ResetTabColors(MessageTab); ResetTabColors(ProfileTab);
+            switch (selected) { case "Upload": SetActiveTab(UploadTab); break; }
+        }
+
+        private void ResetTabColors(VerticalStackLayout tab)
+        {
+            if (tab.Children.Count > 1 && tab.Children[0] is Image icon && tab.Children[1] is Label label)
+            {
+                icon.Opacity = 0.4;
+                label.TextColor = Color.FromArgb("#9CA3AF");
+            }
+        }
+
+        private void SetActiveTab(VerticalStackLayout tab)
+        {
+            if (tab.Children.Count > 1 && tab.Children[0] is Image icon && tab.Children[1] is Label label)
+            {
+                icon.Opacity = 1.0;
+                label.TextColor = Color.FromArgb("#34C759");
+            }
+        }
+    }
+}
