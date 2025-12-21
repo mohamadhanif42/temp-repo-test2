@@ -1,0 +1,22 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="/listings">Listings</a></li>
+                <li><a href="/users">Users</a></li>
+                <li><a href="/login">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="main">
+        @Body
+    </div>
+</div>
+
+<style>
+    .page { display:flex; }
+    .sidebar { width:200px; padding:10px; background:#f5f5f5; }
+    .main { padding:20px; flex:1; }
+</style>

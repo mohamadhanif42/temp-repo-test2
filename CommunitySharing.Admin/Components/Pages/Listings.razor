@@ -1,0 +1,47 @@
+﻿@page "/listings"
+@using CommunitySharing.Admin.Models
+@inject ListingService ListingService
+
+<h3>Listings</h3>
+
+@if (listings == null)
+{
+    <p>Loading...</p>
+}
+else if (!listings.Any())
+{
+    <p>No listings found.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Created</th>
+                <th>Available Until</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var l in listings)
+            {
+                <tr>
+                    <td>@l.Title</td>
+                    <td>@l.Category</td>
+                    <td>@l.CreatedAt.ToLocalTime()</td>
+                    <td>@l.AvailableUntil.ToLocalTime()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ListingDto>? listings;
+
+    protected override async Task OnInitializedAsync()
+    {
+        listings = await ListingService.GetListingsAsync();
+    }
+}
